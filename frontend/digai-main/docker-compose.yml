@@ -1,0 +1,5 @@
+services:
+  digai:
+    build: .
+    ports:
+      - "5000:80"

@@ -1,0 +1,10 @@
+Flask
+Flask-cors
+Flask-SQLAlchemy
+mysql-connector-python
+python-dotenv
+pandas
+scikit-learn
+numpy==1.23.5
+shap
+requests

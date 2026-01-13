@@ -1,0 +1,48 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: digai-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: digai
+      MYSQL_USER: digai
+      MYSQL_PASSWORD: digai
+    ports:
+      - "3306:3306"
+    volumes:
+      - digai_mysql_data:/var/lib/mysql
+
+  recommender:
+    build: ./recommender/recommender-main
+    container_name: digai-recommender
+    depends_on:
+      - mysql
+    env_file:
+      - ./recommender/recommender-main/.env
+    ports:
+      - "5001:5000"
+
+  chatbot:
+    build: ./backend/chatbot-main
+    container_name: digai-chatbot
+    depends_on:
+      - mysql
+      - recommender
+    env_file:
+      - ./backend/chatbot-main/.env
+    ports:
+      - "5000:5000"
+
+  frontend:
+    build: ./frontend/digai-main
+    container_name: digai-frontend
+    depends_on:
+      - chatbot
+      - recommender
+    env_file:
+      - ./frontend/digai-main/.env
+    ports:
+      - "8080:80"
+
+volumes:
+  digai_mysql_data:
