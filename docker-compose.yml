@@ -14,7 +14,6 @@ services:
 
   recommender:
     build: ./recommender/recommender-main
-    container_name: digai-recommender
     depends_on:
       - mysql
     env_file:
@@ -24,7 +23,6 @@ services:
 
   chatbot:
     build: ./backend/chatbot-main
-    container_name: digai-chatbot
     depends_on:
       - mysql
       - recommender
@@ -35,7 +33,6 @@ services:
 
   frontend:
     build: ./frontend/digai-main
-    container_name: digai-frontend
     depends_on:
       - chatbot
       - recommender
